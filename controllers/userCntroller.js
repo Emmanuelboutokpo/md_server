@@ -60,4 +60,28 @@ exports.signin = async (req, res) => {
     });
   }  
   
+  exports.getAllUser = async (req, res) => {
+    const q = "SELECT  * FROM `users`";
+  connection.query(q,(err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length ==0) return res.status(404).json('Users not found!')
+    return res.status(200).json(data);
+  });
+}
+
+exports.makeAnAdmin = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+    console.log(status);
+  const q = "UPDATE users SET `status`=? WHERE `iduser` = ? ";
+
+  const values = [status];
+
+  connection.query(q, [values, id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length ==0) return res.status(404).json('Users not found!')
+    return res.json("Users is an admin");
+  });
+
+}
 
