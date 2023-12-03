@@ -4,25 +4,24 @@ dotenv.config();
 const app = express();
 const path = require('path');
 const { logger } = require('./middleware/logEvents');
-const errorHandler = require('./middleware/errorHandler');
-//const cors =require("cors")
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const errorHandler = require('./middleware/errorHandler');const cors =require("cors")
+//const { createProxyMiddleware } = require('http-proxy-middleware');
 
-//app.use(cors());
+app.use(cors());
 app.use(logger);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', createProxyMiddleware({ target: 'https://mdarchive.onrender.com', changeOrigin: true }));
+//app.use('/api', createProxyMiddleware({ target: 'https://mdarchive.onrender.com', changeOrigin: true }));
 
 
 const users = require('./routes/userRoutes');
 const gender = require('./routes/genderRoutes');
 const music = require('./routes/music');
 
-app.use('/', users);
-app.use('/', gender);
-app.use('/', music);
+app.use('/api', users);
+app.use('/api', gender);
+app.use('/api', music);
 
 
 app.all('*', (req, res) => {
