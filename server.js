@@ -20,9 +20,9 @@ const users = require('./routes/userRoutes');
 const gender = require('./routes/genderRoutes');
 const music = require('./routes/music');
 
-app.use('/api', users);
-app.use('/api', gender);
-app.use('/api', music);
+app.use('/', users);
+app.use('/', gender);
+app.use('/', music);
 
 
 app.all('*', (req, res) => {
